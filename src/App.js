@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import { useNavigate } from "react-router-dom";
 
 import AuthService from "./services/auth.service";
 
@@ -12,13 +13,33 @@ import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
+import Footer from "./components/Footer"
 
 import EventBus from "./common/EventBus";
+import { Button } from "bootstrap";
+import SellProduct from "./components/Form"
+import Header from "./components/Header";
+import Users from "./components/Users"
+import Bikes from "./components/Bike";
+import Phones from "./components/Phones";
+import Car from "./components/Car";
+import Wishlist from "./components/WishList";
+import Electronics from "./components/electronics";
+import Protected from "./components/Protected";
 
 const App = () => {
   const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const navigate=useNavigate();
+  const [search,setSearch]=useState("");
+  
+    window.addEventListener('beforeunload',()=>{
+      alert("window closed")
+    })
+   
+      
+  
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
@@ -46,87 +67,35 @@ const App = () => {
   };
 
   return (
-    <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <Link to={"/"} className="navbar-brand">
-          bezKoder
-        </Link>
-        <div className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to={"/home"} className="nav-link">
-              Home
-            </Link>
-          </li>
+    <>
+    <Header search={search} set={setSearch} />
 
-          {showModeratorBoard && (
-            <li className="nav-item">
-              <Link to={"/mod"} className="nav-link">
-                Moderator Board
-              </Link>
-            </li>
-          )}
-
-          {showAdminBoard && (
-            <li className="nav-item">
-              <Link to={"/admin"} className="nav-link">
-                Admin Board
-              </Link>
-            </li>
-          )}
-
-          {currentUser && (
-            <li className="nav-item">
-              <Link to={"/user"} className="nav-link">
-                User
-              </Link>
-            </li>
-          )}
-        </div>
-
-        {currentUser ? (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to={"/profile"} className="nav-link">
-                {currentUser.username}
-              </Link>
-            </li>
-            <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={logOut}>
-                LogOut
-              </a>
-            </li>
-          </div>
-        ) : (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to={"/login"} className="nav-link">
-                Login
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link to={"/register"} className="nav-link">
-                Sign Up
-              </Link>
-            </li>
-          </div>
-        )}
-      </nav>
+  
 
       <div className="container mt-3">
         <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/home" element={<Home/>} />
-          <Route path="/login" element={<Login/>} />
+          <Route path="/" element={<Home find={search}/>} />
+          <Route path="/home" element={<Home find={search}/>} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register/>} />
-          <Route path="/profile" element={<Profile/>} />
-          <Route path="/user" element={<BoardUser/>} />
+          <Route path="/profile" element={<Protected><Profile/></Protected>} />
+          <Route path="/user" element={<Protected><BoardUser/></Protected>} />
           <Route path="/mod" element={<BoardModerator/>} />
-          <Route path="/admin" element={<BoardAdmin/>} />
+          <Route path="/admin" element={<Protected><BoardAdmin/></Protected>} />
+          <Route path="/sell" element={<Protected><SellProduct/></Protected>} /> 
+          <Route path="/users" element={<Protected><Users/></Protected>} /> 
+          <Route path="/bikes" element={<Protected><Bikes find={search}/></Protected>} /> 
+          <Route path="/phones" element={<Protected><Phones find={search}/></Protected>} /> 
+          <Route path="/Car" element={<Protected><Car find={search}/></Protected>} /> 
+          <Route path="/wishlist" element={<Protected><Wishlist/></Protected>} />
+          <Route path="/electronics" element={<Protected><Electronics find={search}/></Protected>} />
         </Routes>
       </div>
 
-    </div>
+    <Footer />
+    </>
+
+
   );
 };
 

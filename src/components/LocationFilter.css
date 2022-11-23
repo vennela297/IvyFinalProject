@@ -1,0 +1,17 @@
+.Car__main {
+    display: flex;
+}
+
+.Car__filters {
+
+    width: 40%;
+    /* height: auto; */
+    padding: 20px 20px;
+}
+
+.Car__items{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 0 1%;
+}

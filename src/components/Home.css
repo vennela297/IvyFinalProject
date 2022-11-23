@@ -1,0 +1,45 @@
+.Home__banner {
+    height: 135px;    
+   
+    width: 100%;
+    margin-bottom: 50px;
+
+  
+}
+
+.Home__banner_img {
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: cover;
+    position: absolute; 
+    left: 0;
+    right: 0;
+    z-index: 1;
+    height: 165px;
+    width: 100%;
+}
+.Home__items {
+    margin: 20px 20px;
+    padding: 0 16px;  
+    background-color: #ebeeef;
+  
+}
+
+.Home__items__heading {
+    font-size: 24px;
+    margin: 20px 30px;
+    color: #808080;
+}
+
+.Home__item__cards{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 0 1%;
+}
+
+
+  /* .item { 
+    flex: 1; 
+    margin: 0 1%;
+  } */
